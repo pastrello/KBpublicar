@@ -60,7 +60,7 @@ Somente área pública:
 
 ## Atualização de versões anteriores
 
-A v0.3.0 pode ser instalada diretamente sobre v0.1.x ou v0.2.x:
+A v0.3.1 pode ser instalada diretamente sobre v0.1.x ou v0.2.x:
 
 ```bash
 ./install.sh /var/www/kbpublisher
@@ -129,7 +129,7 @@ O modo **Automático** acompanha `prefers-color-scheme` do sistema operacional/n
 ./check.sh /var/www/kbpublisher
 ```
 
-Além de conferir os blocos nos templates, a v0.3.0 compara os SHA-256 dos assets instalados com os arquivos do pacote. Um arquivo alterado localmente aparece como `MOD`.
+Além de conferir os blocos nos templates, a v0.3.1 compara os SHA-256 dos assets instalados com os arquivos do pacote. Um arquivo alterado localmente aparece como `MOD`.
 
 ## Desinstalação
 

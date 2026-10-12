@@ -101,11 +101,25 @@ class PatcherTest(unittest.TestCase):
         self.assertEqual((self.tmp / "admin/jscript/kbp-theme.js").read_bytes(), source)
         self.assertEqual((self.tmp / "client/jscript/kbp-theme.js").read_bytes(), source)
 
-    def test_version_is_030_and_single_source(self):
-        self.assertEqual((PROJECT / "VERSION").read_text(encoding="utf-8").strip(), "0.3.0")
+    def test_version_is_031_and_single_source(self):
+        self.assertEqual((PROJECT / "VERSION").read_text(encoding="utf-8").strip(), "0.3.1")
         patcher_text = PATCHER.read_text(encoding="utf-8")
-        self.assertNotIn('VERSION = "0.3.0"', patcher_text)
+        self.assertNotIn('VERSION = "0.3.1"', patcher_text)
         self.assertIn('VERSION = project_version()', patcher_text)
+
+    def test_client_css_has_public_polish_031(self):
+        css = (PROJECT / "assets/client/kbp-dark-mode.css").read_text(encoding="utf-8")
+        for selector in [
+            '.menuItemSelected',
+            'div.navigation',
+            '.treeNodeSelected',
+            '.niceForm .table',
+            'input[type="file"]::file-selector-button',
+            '#kbp_article_body pre',
+            '#kbp_article_body .hljs',
+        ]:
+            self.assertIn(selector, css)
+
 
     def test_multiple_client_skins_are_detected(self):
         p = self.tmp / "client/skin/view_default/custom/page.html"

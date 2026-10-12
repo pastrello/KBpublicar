@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.3.1 - 2026-10-12
+
+- Refinamento visual da área pública baseado em telas reais de uso.
+- Corrigido o menu superior em dark mode:
+  - fundo e bordas do bloco;
+  - estado normal, hover e selecionado;
+  - contraste do item `...`.
+- Corrigida a faixa de navegação/breadcrumb, antes permanecendo clara em algumas skins.
+- Melhorado o menu lateral:
+  - blocos de categoria;
+  - item selecionado da árvore;
+  - hover dos nós.
+- Corrigida a tela **Ask a Question**:
+  - fundo do formulário;
+  - labels e textos auxiliares;
+  - inputs, select e textarea;
+  - foco dos campos;
+  - input de upload e botão nativo de seleção de arquivo.
+- Melhorada a leitura de artigos:
+  - metadados;
+  - blocos `pre`/`code`/`.hljs`;
+  - blockquotes;
+  - tabelas no corpo do artigo.
+- Mudanças continuam 100% no overlay: nenhum template original de formulário/artigo/menu é copiado ou substituído.
+
 ## 0.3.0 - 2026-10-12
 
 - Projeto preparado para versionamento independente em GitHub, sem fork do KBPublisher.

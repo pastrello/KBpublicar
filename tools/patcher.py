@@ -78,16 +78,16 @@ def target_block(rel: str, newline: str = "\n") -> str:
     if rel.startswith("admin/"):
         lines = [
             "    <!-- KBP-DARK-MODE:BEGIN -->",
-            '    <link rel="stylesheet" href="css/kbp-dark-mode.css?v={pvhash}">',
-            '    <script src="jscript/kbp-theme.js?v={pvhash}"></script>',
+            f'    <link id="kbp-dark-mode-css" rel="stylesheet" href="css/kbp-dark-mode.css?v={{pvhash}}&kbpdark={VERSION}" data-kbp-dark-version="{VERSION}">',
+            f'    <script id="kbp-dark-mode-js" src="jscript/kbp-theme.js?v={{pvhash}}&kbpdark={VERSION}" data-kbp-dark-version="{VERSION}"></script>',
             "    <!-- KBP-DARK-MODE:END -->",
             "",
         ]
     else:
         lines = [
             "    <!-- KBP-DARK-MODE:BEGIN -->",
-            '    <link rel="stylesheet" href="{base_href}client/skin/kbp-dark-mode.css?v={pvhash}">',
-            '    <script src="{base_href}client/jscript/kbp-theme.js?v={pvhash}"></script>',
+            f'    <link id="kbp-dark-mode-css" rel="stylesheet" href="{{base_href}}client/skin/kbp-dark-mode.css?v={{pvhash}}&kbpdark={VERSION}" data-kbp-dark-version="{VERSION}">',
+            f'    <script id="kbp-dark-mode-js" src="{{base_href}}client/jscript/kbp-theme.js?v={{pvhash}}&kbpdark={VERSION}" data-kbp-dark-version="{VERSION}"></script>',
             "    <!-- KBP-DARK-MODE:END -->",
             "",
         ]
@@ -401,6 +401,14 @@ def do_check(root: Path, project: Path, area: str) -> int:
             continue
         print(("OK   " if present else "MISS ") + rel)
         ok = ok and present
+        if present:
+            version_token = f"kbpdark={VERSION}"
+            if version_token not in text:
+                print(f"STALE {rel} - bloco não referencia {version_token}")
+                ok = False
+            elif f'data-kbp-dark-version="{VERSION}"' not in text:
+                print(f"STALE {rel} - marcador de versão do overlay ausente")
+                ok = False
 
     if area in ("both", "client") and (root / LEGACY_CLIENT_TARGET).is_file():
         legacy = read_text(root / LEGACY_CLIENT_TARGET)

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.2 - 2026-10-12
+
+- Corrigido cache-busting dos assets do overlay.
+  - versões anteriores usavam somente o `{pvhash}` do KBPublisher;
+  - CSS e JS agora incluem também `kbpdark=<versão do KBpublicar>` na URL.
+- Links de CSS/JS passam a expor `data-kbp-dark-version` e IDs estáveis para diagnóstico no navegador.
+- O JavaScript publica a versão carregada em `document.documentElement.dataset.kbpDarkVersion` e `KBPTheme.version`.
+- O seletor de tema informa a versão no atributo `title`.
+- `check` agora detecta blocos de template antigos (`STALE`) mesmo que o arquivo CSS/JS no disco esteja correto.
+- Análise do upstream documentou o comportamento híbrido das views públicas: `view_left`/ `view_fixed` reutilizam diversos templates de `view_default`.
+
 ## 0.3.1 - 2026-10-12
 
 - Refinamento visual da área pública baseado em telas reais de uso.

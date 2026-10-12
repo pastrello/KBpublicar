@@ -4,6 +4,8 @@
     var STORAGE_KEY = 'kbp_theme_mode';
     var MODES = ['auto', 'dark', 'light'];
     var media = null;
+    var loader = document.currentScript;
+    var OVERLAY_VERSION = loader ? (loader.getAttribute('data-kbp-dark-version') || 'unknown') : 'unknown';
 
     function getMedia() {
         if (!media && window.matchMedia) {
@@ -47,6 +49,7 @@
         var root = document.documentElement;
         root.setAttribute('data-kbp-theme-mode', mode);
         root.setAttribute('data-kbp-theme', resolved);
+        root.setAttribute('data-kbp-dark-version', OVERLAY_VERSION);
         root.style.colorScheme = resolved;
         updateControl(mode);
     }
@@ -94,6 +97,7 @@
         control.className = 'kbp-theme-switcher';
         control.setAttribute('role', 'group');
         control.setAttribute('aria-label', s.theme);
+        control.setAttribute('title', 'KBpublicar ' + OVERLAY_VERSION);
 
         var label = document.createElement('span');
         label.className = 'kbp-theme-switcher-label';
@@ -129,6 +133,7 @@
     }
 
     window.KBPTheme = {
+        version: OVERLAY_VERSION,
         set: function (mode) { apply(mode, true); },
         get: readMode,
         resolved: function () { return resolvedMode(readMode()); }

@@ -60,7 +60,7 @@ Somente área pública:
 
 ## Atualização de versões anteriores
 
-A v0.3.1 pode ser instalada diretamente sobre v0.1.x ou v0.2.x:
+A v0.3.2 pode ser instalada diretamente sobre v0.1.x ou v0.2.x:
 
 ```bash
 ./install.sh /var/www/kbpublisher
@@ -129,7 +129,7 @@ O modo **Automático** acompanha `prefers-color-scheme` do sistema operacional/n
 ./check.sh /var/www/kbpublisher
 ```
 
-Além de conferir os blocos nos templates, a v0.3.1 compara os SHA-256 dos assets instalados com os arquivos do pacote. Um arquivo alterado localmente aparece como `MOD`.
+Além de conferir os blocos nos templates, a v0.3.2 compara os SHA-256 dos assets instalados com os arquivos do pacote. Um arquivo alterado localmente aparece como `MOD`.
 
 ## Desinstalação
 
@@ -206,3 +206,20 @@ O repositório possui GitHub Actions para executar essa validação em `push` e 
 **KBPublisher Community Edition:** também é distribuído sob Apache License 2.0 por seus respectivos autores.
 
 Este projeto é um overlay independente e não concede direitos sobre nomes, marcas ou outros ativos do KBPublisher além do uso necessário para indicar compatibilidade.
+
+
+## Diagnóstico no navegador
+
+A partir da v0.3.2, o overlay possui cache-busting próprio e expõe a versão efetivamente carregada.
+
+No Console do navegador:
+
+```javascript
+KBPTheme.version
+document.documentElement.dataset.kbpDarkVersion
+document.getElementById('kbp-dark-mode-css').href
+```
+
+Os dois primeiros valores devem informar a versão atual do KBpublicar, e a URL do CSS deve conter `kbpdark=<versão>`.
+
+Isso distingue três situações diferentes: pacote instalado no servidor, bloco de template atualizado e asset realmente carregado pelo navegador.

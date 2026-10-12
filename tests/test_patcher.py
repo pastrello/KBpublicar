@@ -101,11 +101,26 @@ class PatcherTest(unittest.TestCase):
         self.assertEqual((self.tmp / "admin/jscript/kbp-theme.js").read_bytes(), source)
         self.assertEqual((self.tmp / "client/jscript/kbp-theme.js").read_bytes(), source)
 
-    def test_version_is_031_and_single_source(self):
-        self.assertEqual((PROJECT / "VERSION").read_text(encoding="utf-8").strip(), "0.3.1")
+    def test_version_is_032_and_single_source(self):
+        self.assertEqual((PROJECT / "VERSION").read_text(encoding="utf-8").strip(), "0.3.2")
         patcher_text = PATCHER.read_text(encoding="utf-8")
-        self.assertNotIn('VERSION = "0.3.1"', patcher_text)
+        self.assertNotIn('VERSION = "0.3.2"', patcher_text)
         self.assertIn('VERSION = project_version()', patcher_text)
+
+    def test_template_block_has_overlay_cache_buster_and_version_marker(self):
+        self.assertEqual(self.runp("install", str(self.tmp), "--client-only").returncode, 0)
+        client = (self.tmp / "client/skin/view_default/default/page.html").read_text(encoding="utf-8")
+        self.assertIn("kbpdark=0.3.2", client)
+        self.assertIn('data-kbp-dark-version="0.3.2"', client)
+        self.assertIn('id="kbp-dark-mode-css"', client)
+        self.assertIn('id="kbp-dark-mode-js"', client)
+
+    def test_theme_js_exposes_overlay_version(self):
+        js = (PROJECT / "assets/common/kbp-theme.js").read_text(encoding="utf-8")
+        self.assertIn("KBPTheme", js)
+        self.assertIn("version: OVERLAY_VERSION", js)
+        self.assertIn("data-kbp-dark-version", js)
+
 
     def test_client_css_has_public_polish_031(self):
         css = (PROJECT / "assets/client/kbp-dark-mode.css").read_text(encoding="utf-8")

@@ -25,5 +25,5 @@ jobs:
       - name: Syntax checks
         run: |
           python3 -m py_compile tools/patcher.py
-          bash -n install.sh uninstall.sh check.sh
+          bash -n install.sh uninstall.sh check.sh tools/configure-upstream.sh
           node --check assets/common/kbp-theme.js

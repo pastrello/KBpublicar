@@ -156,6 +156,27 @@ Também é possível remover apenas uma área:
 
 O estado da área não removida é preservado.
 
+## Modelo de desenvolvimento separado
+
+O `KBpublicar` continua **independente** do repositório oficial. O código original do KBPublisher não é copiado para cá.
+
+Branches:
+
+```text
+main      versão estável do overlay
+develop   auditoria, testes e experimentos
+```
+
+O KBPublisher oficial é usado como remote local chamado `upstream`. Para configurar:
+
+```bash
+./tools/configure-upstream.sh
+```
+
+A referência auditada atualmente fica registrada em `UPSTREAM_BASE` e documentada em `UPSTREAM.md`.
+
+A auditoria inicial do código oficial está em `docs/audit/`. O objetivo é identificar melhorias antes de decidir se, no futuro, vale transformar o projeto em um fork real.
+
 ## Atualização futura do KBPublisher
 
 Fluxo recomendado:
@@ -171,7 +192,7 @@ Fluxo recomendado:
 
 ```bash
 python3 -m unittest discover -s tests -v
-bash -n install.sh uninstall.sh check.sh
+bash -n install.sh uninstall.sh check.sh tools/configure-upstream.sh
 python3 -m py_compile tools/patcher.py
 node --check assets/common/kbp-theme.js
 ```
